@@ -1,15 +1,13 @@
-# This image contains everything you need for this week's task.
-#
-# Use this for GitLab CI...
-# image: "smblott/dcu-docker-gitlab-ci"
-#
-# Use this for testing locally (no asciidoc)...
-image: node
+image: "smblott/dcu-docker-gitlab-ci"
 
-# We'll do everything in one stage, here.
-#
+variables:
+   MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+
+
+services:
+   - mysql:5.7
+
 test:
    script:
-      - echo FIXME... build static/index.html
-      - echo FIXME... install node modules
-      - echo FIXME... run tests
+      - make server=mysql -C ./demos/docker/2-mysql load
+      - make server=mysql -C ./demos/docker/2-mysql test
