@@ -115,6 +115,63 @@ var stack = [];
  * like "/pop", or "/push".
  */
 
+app.post("/push", function(req, res) {
+   if ( req.body
+	&& req.body.hasOwnProperty("values") ) {
+      values = req.body.values;
+      stack = stack.concat(values);
+      console.log("new stack", stack);
+      res.send(`server... ok, pushed: ${values}\n`);
+   }
+   else {
+      res.status(400).send("bad request (invalid value)\n");
+   }
+});
+
+app.get("/pop", function(req, res) {
+   if (stack <= 0) {
+      res.status(400).send("bad request (array is empty)\n");
+   }
+   else {
+      console.log("server... popping:");
+      res.send(JSON.stringify(stack.pop()));
+   }
+});
+
+app.get("/length", function(req, res) {
+	res.send(JSON.stringify(stack.length));
+});
+
+app.get("/peek", function(req, res) {
+   value = stack.pop();
+   stack.push(value);
+   res.send(JSON.stringify(value));
+});
+
+app.get("/add", function(req, res) {
+   value = stack.pop();
+   stack.push(value + stack.pop());
+   res.send(JSON.stringify(stack));
+});
+
+app.get("/subtract", function(req, res) {
+   value = stack.pop();
+   stack.push(stack.pop() - value);
+   res.send(JSON.stringify(stack));
+});
+
+app.get("/multiply", function(req, res) {
+   value = stack.pop();
+   stack.push(stack.pop() * value);
+   res.send(JSON.stringify(stack));
+});
+
+app.get("/divide", function(req, res) {
+   value = stack.pop();
+   stack.push(stack.pop() / value);
+   res.send(JSON.stringify(stack));
+});
+
 /**
  * Start the server on the indicated port.
  *
