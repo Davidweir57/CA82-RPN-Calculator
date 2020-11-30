@@ -4,12 +4,12 @@
 # image: "smblott/dcu-docker-gitlab-ci"
 #
 # Use this for testing locally (no asciidoc)...
-image: node
+image: smblott/dcu-docker-gitlab-ci
 
 # We'll do everything in one stage, here.
 #
 test:
    script:
-      - echo FIXME... build static/index.html
-      - echo FIXME... install node modules
-      - echo FIXME... run tests
+      - make build
+      - npm install
+      - make run-test-rpn
